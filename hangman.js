@@ -64,7 +64,7 @@ var hangman = {
     hangman.rights = 0;
     hangman.wrongs = 0;
     hangman.hLives.innerHTML = hangman.guesses;
-    hangman.hImg.style.opacity = 0;
+    hangman.hImg.style.opacity = 0.1;
 
     // (F2) CHOOSE A RANDOM WORD FROM THE DICTIONARY
     let key_dict = Object.keys(hangman.dictionary);
