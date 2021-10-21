@@ -107,7 +107,7 @@ var hangman = {
       hangman.rights += hits.length;
       if (hangman.rights == hangman.wordlen) {
         hangman.toggle(true);
-        alert("YOU WIN!, Definition: " + hangman.word_def);
+        alert("YOU WIN!, " + hangman.word + " = " + hangman.word_def);
       }
     }
 
@@ -122,7 +122,7 @@ var hangman = {
       // Run out of guesses - LOSE!
       if (hangman.wrongs == hangman.guesses) {
         hangman.toggle(true);
-        alert("YOU LOSE!, Definition: " + hangman.word_def);
+        alert("YOU LOSE!, " + hangman.word + " = " + hangman.word_def);
       }
     }
 
