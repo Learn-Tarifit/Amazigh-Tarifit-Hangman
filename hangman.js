@@ -28,7 +28,7 @@ var hangman = {
     hangman.hLives = document.getElementById("hangman-lives");
 
     // (D2) GENERATE AVAILABLE CHARACTERS (A-Z)
-    var dic = ['A', 'B', 'C', 'Č', 'D', 'Ḍ', 'E', 'F', 'G', 'Ǧ', 'Ɣ', 'H', 'Ḥ', 'I', 'J', 'K', 'L', 'M', 'N', 'Ɛ', 'Q', 'R', 'Ř', 'Ṛ', 'S', 'Ṣ', 'T', 'Ṭ', 'U', 'W', 'X', 'Y', 'Z', 'Ẓ'];
+    var dic = ['A', 'B', 'C', 'Č', 'D', 'Ḍ', 'E', 'F', 'G', 'Ǧ', 'Ɣ', 'H', 'Ḥ', 'I', 'J', 'K', 'L', 'M', 'N', 'Ɛ', 'Q', 'R', 'Ř', 'Ṛ', 'S', 'Ṣ', 'T', 'Ṭ', 'U', 'W', 'X', 'Y', 'Z', 'Ẓ', ' '];
     for (var i=0; i<dic.length; i++) {
       let charnow = document.createElement("input");
       
