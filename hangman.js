@@ -3,7 +3,7 @@ var hangman = {
   // Total number of allowed guesses before hanging
   guesses : 5,
   // Available words for guessing
-  dictionary : ["impress", "incapable", "satisfaction", "develop", "determine"],
+  dictionary : ["impreɛss", "inɣɛcapable", "satisfɣɛaction", "devɣɛelop", "deɣɛtermine"],
 
   // (B) FLAGS
   word : null, // Current chosen word
@@ -30,6 +30,16 @@ var hangman = {
       let charnow = document.createElement("input");
       charnow.type = "button";
       charnow.value = String.fromCharCode(i);
+      charnow.disabled = true;
+      charnow.addEventListener("click", hangman.check);
+      hangman.hChar.appendChild(charnow);
+    }
+    var dic = ['ɣ', 'ɛ'];
+    for (var i=0; i<2; i++) {
+      let charnow = document.createElement("input");
+      
+      charnow.type = "button";
+      charnow.value = dic[i];
       charnow.disabled = true;
       charnow.addEventListener("click", hangman.check);
       hangman.hChar.appendChild(charnow);
@@ -81,7 +91,8 @@ var hangman = {
     // (G1) CHECK FOR HITS
     var index = 0, hits = [];
     while (index >= 0) {
-      index = hangman.word.indexOf(this.value, index);
+      index = hangman.word.toLowerCase().indexOf(this.value, index);
+      console.log(hangman.word)
       if (index == -1) { break; }
       else {
         hits.push(index);
