@@ -1,12 +1,14 @@
 var hangman = {
   // (A) GAME SETTINGS
   // Total number of allowed guesses before hanging
-  guesses : 5,
+  guesses : 10,
   // Available words for guessing
-  dictionary : ["impreɛss", "inɣɛcapable", "satisfɣɛaction", "devɣɛelop", "deɣɛtermine"],
+  //dictionary : ["impreɛss", "inɣɛcapable", "satisfɣɛaction", "devɣɛelop", "deɣɛtermine"],
+  dictionary : {"head": "azeǧif", "brain": "aǧi", "hair": "aceɛur", "ponytail": "ajeṭṭuy", "eyes": "tiṭṭawin", "eyebrows": "tammiwin", "eyelashes": "abriwen", "ear": "ameẓẓuɣ", "nose": "tinzar", "mouth": "aqemmum", "teeth": "tiɣmas", "lips": "ancucen", "tongue": "iřes", "throat": "iri", "shoulder": "taɣṛut", "back": "aɛrur", "hand": "afus", "finger": "aḍaḍ", "thumb": "imez", "nails": "iccaren", "bellybutton": "tamit", "belly": "aɛeddis", "knee": "afud", "foot": "aḍar", "toe": "tafdent", "water": "aman", "milk": "aceffay", "buttermilk": "aɣi", "sugar": "ssukar", "bread": "aɣrum", "meat": "aysum", "egg": "tamǧač", "honey": "tammant", "rice": "aruẓ", "tea": "atay", "coffee": "řqehwa", "olive oil": "zzect", "butter": "dhen", "cheese": "furmaj", "chocolate": "cukulati", "cookies": "ɣayita", "soft ice": "laḍu", "candy": "ḥalawat", "ice": "pulu", "apple": "tateffaḥt", "honey melon": "abettix", "water melon": "dellaḥ", "pommegranate": "aremman", "banana": "platanu / banan", "apricot": "řmecmec", "pear": "řfiras", "peach": "řxux", "plums": "řbaquq", "orange": "aletcini", "potato": "baṭaṭa", "peas": "tinifin", "onion": "řebser", "cucumber": "řexyar", "carrot": "xizzu", "garlic": "ticart", "pepper": "řferfeř", "tomato": "tumaɛtic", "almond": "ǧuz", "nuts": "tqawit", "walnut": "taɣyact", "bird": "ajḍiḍ", "pigeon": "adbir", "chick": "afiǧus", "chicken": "tayaziṭ", "rooster": "ayaẓiḍ", "donkey": "aɣyur", "horse": "ayis/akida", "camel": "ařɣem", "cat": "amuc", "dog": "aqzin", "lamb": "izmar", "sheep": "icarri", "cow": "tafunast", "calf": "aɛejmi", "bull": "ayenduz", "goat": "taɣat", "bunny": "aqenni", "bunny (in the wild)": "ayarẓiẓ", "hedgehog": "insi", "pig": "iřef", "lion": "buharu", "hyena": "ifis", "fox": "icɛeb", "panther": "aɣiřas", "monkey": "řqard", "snake": "afiɣar", "mouse": "aɣarda", "frog": "aqaqriw", "bee": "tazizwit", "grasshopper": "burxes", "scorpion": "taɣirdent", "worm": "akecca", "fishes": "iserman", "1 o'clock": "waḥit", "4 o'clock": "arebɛa ", "3 o'clock": "tesɛa", "12 o'clock": "tenɛac", "half past 2": "tnayen d uzyen", "half past 5": "xemsa d uzyen", "half past 10": "ɛecra d uzyen", "half past 12": "tenɛac d uzyen", "quarter past 3": "trata urbeɛ", "quarter to 4": "arebɛa qel arbeɛ", "5 minutes to 9": "tesɛa qel xemsa", "5 minutes over 6": "setta uxemsa", "10 minutes to 7": "sebɛa qel ɛecra", "10 minutes over 8": "tmenya uɛecra", "20 mintues before 2": "tnayen qel ɛicrin", "20 minutes over 11": "ḥitac uɛicrin", "25 mintues over 1": "waḥit uxemsa uɛicrin", "25 mintues before 12": "tenɛac qel xemsa uɛicrin", "yellow": "awraɣ", "black": "abarcan", "red": "azeggʷaɣ", "blue": "aḥmaymi", "purple": "azbaybi", "green": "azegza", "brown": "aqehwi", "pink": "arusa", "white": "acemřař"},
 
   // (B) FLAGS
   word : null, // Current chosen word
+  word_def: null, // Chosen word definition
   wordlen : 0, // Word length
   rights : 0, // Current number of correct words
   wrongs : 0, // Current number of wrong guesses
@@ -26,16 +28,8 @@ var hangman = {
     hangman.hLives = document.getElementById("hangman-lives");
 
     // (D2) GENERATE AVAILABLE CHARACTERS (A-Z)
-    for (var i=65; i<91; i++) {
-      let charnow = document.createElement("input");
-      charnow.type = "button";
-      charnow.value = String.fromCharCode(i);
-      charnow.disabled = true;
-      charnow.addEventListener("click", hangman.check);
-      hangman.hChar.appendChild(charnow);
-    }
-    var dic = ['Ɛ', 'Ɣ'];
-    for (var i=0; i<2; i++) {
+    var dic = ['A', 'B', 'C', 'Č', 'D', 'Ḍ', 'E', 'F', 'G', 'Ǧ', 'Ɣ', 'H', 'Ḥ', 'I', 'J', 'K', 'L', 'M', 'N', 'Ɛ', 'Q', 'R', 'Ř', 'Ṛ', 'S', 'Ṣ', 'T', 'Ṭ', 'U', 'W', 'X', 'Y', 'Z', 'Ẓ'];
+    for (var i=0; i<dic.length; i++) {
       let charnow = document.createElement("input");
       
       charnow.type = "button";
@@ -67,7 +61,9 @@ var hangman = {
     hangman.hImg.style.opacity = 0;
 
     // (F2) CHOOSE A RANDOM WORD FROM THE DICTIONARY
-    hangman.word = hangman.dictionary[Math.floor(Math.random() * Math.floor(hangman.dictionary.length))];
+    let key_dict = Object.keys(hangman.dictionary);
+    hangman.word_def = key_dict[Math.floor(Math.random() * Math.floor(key_dict.length))];
+    hangman.word = hangman.dictionary[hangman.word_def];
     hangman.word = hangman.word.toUpperCase();
     hangman.wordlen = hangman.word.length;
     // CHEAT!
@@ -111,7 +107,7 @@ var hangman = {
       hangman.rights += hits.length;
       if (hangman.rights == hangman.wordlen) {
         hangman.toggle(true);
-        alert("YOU WIN!");
+        alert("YOU WIN!, Definition: " + hangman.word_def);
       }
     }
 
@@ -126,7 +122,7 @@ var hangman = {
       // Run out of guesses - LOSE!
       if (hangman.wrongs == hangman.guesses) {
         hangman.toggle(true);
-        alert("YOU LOSE!");
+        alert("YOU LOSE!, Definition: " + hangman.word_def);
       }
     }
 
