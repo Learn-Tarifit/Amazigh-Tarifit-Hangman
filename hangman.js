@@ -1,3 +1,8 @@
+String.prototype.replaceAll = function(str1, str2, ignore) 
+{
+    return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
+}
+
 var hangman = {
   // (A) GAME SETTINGS
   // Total number of allowed guesses before hanging
@@ -10,6 +15,7 @@ var hangman = {
   word : null, // Current chosen word
   word_def: null, // Chosen word definition
   wordlen : 0, // Word length
+  actual_wordlen : 0, // Actual word length without spaces
   rights : 0, // Current number of correct words
   wrongs : 0, // Current number of wrong guesses
 
@@ -28,7 +34,7 @@ var hangman = {
     hangman.hLives = document.getElementById("hangman-lives");
 
     // (D2) GENERATE AVAILABLE CHARACTERS (A-Z)
-    var dic = ['A', 'B', 'C', 'Č', 'D', 'Ḍ', 'E', 'F', 'G', 'Ǧ', 'Ɣ', 'H', 'Ḥ', 'I', 'J', 'K', 'L', 'M', 'N', 'Ɛ', 'Q', 'R', 'Ř', 'Ṛ', 'S', 'Ṣ', 'T', 'Ṭ', 'U', 'W', 'X', 'Y', 'Z', 'Ẓ', ' '];
+    var dic = ['A', 'B', 'C', 'Č', 'D', 'Ḍ', 'E', 'F', 'G', 'Ǧ', 'Ɣ', 'H', 'Ḥ', 'I', 'J', 'K', 'L', 'M', 'N', 'Ɛ', 'Q', 'R', 'Ř', 'Ṛ', 'S', 'Ṣ', 'T', 'Ṭ', 'U', 'W', 'X', 'Y', 'Z', 'Ẓ'];
     for (var i=0; i<dic.length; i++) {
       let charnow = document.createElement("input");
       
@@ -66,6 +72,10 @@ var hangman = {
     hangman.word = hangman.dictionary[hangman.word_def];
     hangman.word = hangman.word.toUpperCase();
     hangman.wordlen = hangman.word.length;
+    hangman.actual_wordlen = hangman.word.replaceAll(' ', '').length;
+    console.log(hangman.wordlen);
+    console.log(hangman.actual_wordlen);
+    console.log('-');
     // CHEAT!
     // console.log(hangman.word);
 
@@ -73,7 +83,11 @@ var hangman = {
     hangman.hWord.innerHTML = "";
     for (var i=0; i<hangman.word.length; i++) {
       var charnow = document.createElement("span");
-      charnow.innerHTML = "_";
+      var xx="_";
+      if (hangman.word[i] == " ") {
+        xx = " ";
+      }
+      charnow.innerHTML = xx;
       charnow.id = "hangword-" + i;
       hangman.hWord.appendChild(charnow);
     }
@@ -84,6 +98,8 @@ var hangman = {
 
   // (G) CHECK IF SELECTED CHARACTER IS IN THE CURRENT WORD
   check : function () {
+
+
     // (G1) CHECK FOR HITS
     var index = 0, hits = [];
     while (index >= 0) {
@@ -105,9 +121,12 @@ var hangman = {
 
       // All hit - WIN!
       hangman.rights += hits.length;
-      if (hangman.rights == hangman.wordlen) {
+      console.log(hangman.wordlen);
+      console.log(hangman.actual_wordlen);
+      console.log(hangman.rights);
+      if (hangman.rights == hangman.actual_wordlen) {
         hangman.toggle(true);
-        alert("YOU WIN!, " + hangman.word + " = " + hangman.word_def);
+        alert("YOU WIN!, " + hangman.word.toLowerCase() + " = " + hangman.word_def);
       }
     }
 
@@ -122,7 +141,7 @@ var hangman = {
       // Run out of guesses - LOSE!
       if (hangman.wrongs == hangman.guesses) {
         hangman.toggle(true);
-        alert("YOU LOSE!, " + hangman.word + " = " + hangman.word_def);
+        alert("YOU LOSE!, " + hangman.word.toLowerCase() + " = " + hangman.word_def);
       }
     }
 
