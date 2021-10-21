@@ -1,0 +1,44 @@
+/* (A) GAME WRAPPER */
+#hangman-wrap {
+  display: flex;
+  max-width: 600px;
+  margin: 0 auto;
+  background: #ffdfbe;
+}
+#hangman-left, #hangman-right { padding: 10px; }
+#hangman-left { width: 30%; text-align: center; }
+#hangman-right { width: 70%; }
+
+/* (B) COMMON INTERFACE */
+#hangman-wrap, #hangman-wrap input {
+  font-family: Impact, sans-serif;
+  font-size: 20px;
+}
+#hangman-wrap input {
+  padding: 5px 20px;
+  margin: 2px;
+  background: #e46810;
+  color: #fff;
+  border: 0;
+}
+#hangman-wrap input[type=button]:disabled {
+  background: #7b7b7b;
+  color: #ccc;
+}
+
+/* (C) LEFT - HANGMAN IMAGE */
+#hangman-img {
+  max-width: 100%;
+  transition: opacity 0.3s;
+  opacity: 0;
+}
+
+/* (D) RIGHT - CURRENT WORD(S) */
+#hangman-words span {
+  font-size: 30px;
+  display: inline-block;
+  margin: 5px;
+}
+
+/* (E) RIGHT - AVAILABLE CHARACTERS */
+#hangman-char { margin: 10px 0; }
