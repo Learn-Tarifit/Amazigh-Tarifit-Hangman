@@ -34,7 +34,7 @@ var hangman = {
       charnow.addEventListener("click", hangman.check);
       hangman.hChar.appendChild(charnow);
     }
-    var dic = ['ɣ', 'ɛ'];
+    var dic = ['Ɛ', 'Ɣ'];
     for (var i=0; i<2; i++) {
       let charnow = document.createElement("input");
       
@@ -91,7 +91,7 @@ var hangman = {
     // (G1) CHECK FOR HITS
     var index = 0, hits = [];
     while (index >= 0) {
-      index = hangman.word.toLowerCase().indexOf(this.value, index);
+      index = hangman.word.indexOf(this.value, index);
       console.log(hangman.word)
       if (index == -1) { break; }
       else {
