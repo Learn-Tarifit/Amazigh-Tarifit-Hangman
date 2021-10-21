@@ -1,24 +1,33 @@
-<link rel="stylesheet" type="text/css" href="./styles.css"/>
-<div class="wrapper">
-   <h1>Hangman</h1>
-    <h2>Vanilla JavaScript Hangman Game</h2>
-    <p>Use the alphabet below to guess the word, or click hint to get a clue. </p>
-</div>
-<div class="wrapper">
-    <div id="buttons">
-    </div>  
-    <p id="catagoryName"></p>
-    <div id="hold">
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      Simple Hangman Javascript
+    </title>
+    <link href="hangman.css" rel="stylesheet">
+    <script src="hangman.js"></script>
+  </head>
+  <body>
+    <div id="hangman-wrap">
+      <!-- (A) LEFT : HANGMAN & LIVES -->
+      <div id="hangman-left">
+        <img id="hangman-img" src="hangman.png"/>
+        <div id="hangman-lives-w">
+          REMAIN: <span id="hangman-lives"></span>
+        </div>
+      </div>
+
+      <!-- (B) RIGHT : GAME INTERFACE -->
+      <div id="hangman-right">
+        <!-- (B1) CURRENT WORD(S) -->
+        <div id="hangman-words"></div>
+
+        <!-- (B2) AVAILABLE CHARACTERS -->
+        <div id="hangman-char"></div>
+
+        <!-- (B3) RESET -->
+        <input type="button" value="Reset" id="hangman-reset" disabled/>
+      </div>
     </div>
-    <p id="mylives"></p>
-    <p id="clue">Clue -</p>  
-     <canvas id="stickman">This Text will show if the Browser does NOT support HTML5 Canvas tag</canvas>
-    <div class="container">
-      <button id="hint">Hint</button>
-      <button id="reset">Play again</button>
-    </div>
-</div>
-<script src="script.js"></script>
-
-
-
+  </body>
+</html>
